@@ -8,6 +8,7 @@ DATABASE = 'blog.db'
 USERNAME = 'admin'
 PASSWORD = 'admin'
 SECRET_KEY = '==57%wing%BETTER%panama%15=='
+
 app = Flask(__name__)
 
 app.config.from_object(__name__)
@@ -55,9 +56,8 @@ def add():
 		flash("All fields are required. Please try again.")
 		return redirect(url_for('main'))
 	else:
-		g.db = connect.db()
-		g.db.execute('insert into posts (title,post) values (?,?)',
-		[request.form['title'],request.form['post']])
+		g.db = connect_db()
+		g.db.execute('insert into posts (title,post) values (?,?)',[request.form['title'],request.form['post']])
 		g.db.commit()
 		g.db.close()
 		flash('New entry was successfully posted!')
